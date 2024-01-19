@@ -1,0 +1,98 @@
+/* #F96666
+#674747
+#829460
+#EEEEEE */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+}
+body {
+  background-color: #000000;
+  color: white;
+  width: 85%;
+  margin: 0 auto;
+}
+
+p.titulo {
+  font-size: 2rem;
+
+  color: rgb(232, 232, 245);
+  text-align: center;
+  font-weight: 600;
+}
+p.subtitulo {
+  font-size: 1.8rem;
+  color: #6d9886;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
+}
+nav {
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  transition: 1s ease-in-out;
+}
+nav a:hover {
+  color: rgb(199, 255, 134);
+  transition: 1s ease-in-out;
+  font-size: 1.2rem;
+}
+.tabla a {
+  color: #000000;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+}
+th {
+  /* background-image: url("https://www.transparenttextures.com/patterns/binding-dark.png"); */
+  background-color: #6d9886;
+  border: solid 1px black;
+  border-collapse: collapse;
+  padding: 0.5rem;
+}
+td {
+  border: solid 1px black;
+  border-collapse: collapse;
+  padding: 0.5rem;
+  background-color: #674747;
+  transition: 0.2s ease-in-out;
+  /* background-image: url("https://www.transparenttextures.com/patterns/binding-dark.png"); */
+  color: black; /* Color de letra para las celdas */
+}
+td:hover {
+  font-size: 1.3rem;
+  transition: 0.2s ease-in-out;
+  background-color: #987272;
+}
+/* Estilos para celdas impares */
+tr:nth-child(odd) td {
+  background-color: #f6f6f6;
+}
+
+/* Estilos para celdas pares */
+tr:nth-child(even) td {
+  background-color: #d9cab3;
+}
+
+.tabla {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
