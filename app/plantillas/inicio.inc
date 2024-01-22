@@ -11,14 +11,14 @@
       </tr>
     </thead>
     <tbody>
-    <?php
-      foreach ($library as $codigo => ['título' => $titulo, 'autor' => $autor, 'género' => $genero, 'prestado' => $disponible]){
-        echo ($disponible==0? '<tr><td><a href="#">'.$titulo.'</a></td>': '<td>'.$titulo.'</td>');
-        echo '<td>'. $autor . '</td><td>'. $genero . '</td><td>'. ($disponible==1? 'prestado':'Disponible') . '</td></tr>';
-      } 
-    ?>
+      <?php
+      foreach ($library as $codigo => ['titulo' => $titulo, 'autor' => $autor, 'genero' => $genero, 'prestado' => $disponible]) {
+        echo ($disponible == 0 ? '<tr><td><a href="#">' . $titulo . '</a></td>' : '<td>' . $titulo . '</td>');
+        echo '<td>' . $autor . '</td><td>' . $genero . '</td><td>' . ($disponible == 1 ? 'prestado' : 'Disponible') . '</td></tr>';
+      }
+      ?>
     </tbody>
-  </table> 
+  </table>
 </div>
 
 <?php $contenido = ob_get_clean() ?>
