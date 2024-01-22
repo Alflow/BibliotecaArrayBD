@@ -22,8 +22,8 @@ class GestionBdRepositorio
                 foreach ($tempLibrary as $book => $details) {
                     $finalLibrary[$details['codigo']] = ['titulo' => $details['titulo'], 'autor' => $details['autor'], 'genero' => $details['genero'], 'prestado' => $details['prestado']];
                 }
-                var_dump('TEST FINAL LIBRARY');
-                var_dump($finalLibrary);
+                // var_dump('TEST FINAL LIBRARY');
+                // var_dump($finalLibrary);
 
                 return $finalLibrary;
             } catch (\PDOException $ex) {
