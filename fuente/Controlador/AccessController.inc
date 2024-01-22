@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../Repositorio/FileToArrayToFile.php';
+require_once __DIR__ . '/../Repositorio/GestionBdRepositorio.php';
 require_once __DIR__ . '/../../app/utilidades/sanea.inc';
 
 class AccessController
@@ -27,14 +27,12 @@ class AccessController
         try {
           require_once __DIR__ . '/../Modelo/AppException.inc';
 
-          //Instanciamos un FileToArrayToFile
-          $baseUsuarios = new FileToArrayToFile;
+          // instanciamos una GBDR
+          $users = (new GestionBdRepositorio())->getSocios();
 
-          //Extraemos el array de usuarios del archivo. 
-          $listadoUsuarios = $baseUsuarios->getArrayFromFile(SOCIOS_FILE);
 
           //Recorremos el array de usuarios de la "base de datos" 
-          foreach ($listadoUsuarios as $user) {
+          foreach ($users as $user) {
             if ($user['eCorreo'] == $inputs['userName']) {
               // CORREO COINCIDE
               if (password_verify($inputs['password'], $user['pwd'])) {
@@ -52,7 +50,7 @@ class AccessController
               $errorLogin = true;
             }
           }
-        } catch (Exception $ex) {
+        } catch (\PDOException $ex) {
           // Lanzar una excepción con un mensaje informativo
           throw new Exception("Error procesando el login: " . $ex->getMessage());
         }
@@ -62,7 +60,7 @@ class AccessController
   }
 
 
-  
+
   public function logOut() //funcion para cerrar sesión. 
   {
     echo '<script> alert("Se cerrará su sesión") </script>';

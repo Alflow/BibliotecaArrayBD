@@ -1,6 +1,7 @@
 <?php
 // Ejemplo de controlador para página home de la aplicación
-require_once __DIR__ . '/../Repositorio/FileToArrayToFile.php';
+require_once __DIR__ . '/../Repositorio/GestionBdRepositorio.php';
+
 require_once __DIR__ . '/../../app/utilidades/sanea.inc';
 
 class OrderReturnController
@@ -22,7 +23,21 @@ class OrderReturnController
                 unset($bookForReturn);
 
                 //Extraemos los arrays
-                $borrowedBooks = $checker->getArrayFromFile(LIBROS_PRESTADOS_FILE);
+
+                //PENDIENTE  HACER ESTA FUNCIONALIDAD
+
+
+
+
+
+
+
+
+
+
+
+
+                $borrowedBooks =  (new GestionBdRepositorio())->getLibrosPrestados();
                 $library = $checker->getArrayFromFile(LIBROS_FILE);
 
                 //eliminamos del libros prestados la entrada
