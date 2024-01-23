@@ -16,7 +16,7 @@
             <?php foreach ($library as $code => $bookData) : ?>
                 <?php if ($bookData['prestado'] == 0) : ?>
                     <tr>
-                        <td><?= htmlspecialchars($bookData['título']) ?></td>
+                        <td><?= htmlspecialchars($bookData['titulo']) ?></td>
                         <td><?= htmlspecialchars($bookData['autor']) ?></td>
                         <td><input type="checkbox" name="booksForAsk[]" value="<?= htmlspecialchars($code) ?>"></td>
                     </tr>
@@ -26,7 +26,7 @@
             <?php foreach ($library as $code => $bookData) : ?>
                 <?php if ($bookData['prestado'] == 0) : ?>
                     <tr>
-                        <td><?= htmlspecialchars($bookData['título']) ?></td>
+                        <td><?= htmlspecialchars($bookData['titulo']) ?></td>
                         <td><?= htmlspecialchars($bookData['autor']) ?></td>
                         <td><input type="checkbox" name="booksForAsk[]" value="<?= htmlspecialchars($code) ?>"></td>
                     </tr>
