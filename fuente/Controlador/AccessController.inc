@@ -26,33 +26,24 @@ class AccessController
       if (!isset($errorEmptyData) && !isset($errorIncorrectEmail)) {
         try {
           require_once __DIR__ . '/../Modelo/AppException.inc';
+          require_once __DIR__ . '/../../core/ConexionBd.inc';
+          require_once __DIR__ . '/../../fuente/Repositorio/GestionBdRepositorio.php';
 
-          // instanciamos una GBDR
-          $users = (new GestionBdRepositorio())->getSocios();
-
-
-          //Recorremos el array de usuarios de la "base de datos" 
-          foreach ($users as $user) {
-            if ($user['eCorreo'] == $inputs['userName']) {
-              // CORREO COINCIDE
-              if (password_verify($inputs['password'], $user['pwd'])) {
-                // PASS COINCIDE
-                echo '<script> alert("BIENVENIDO!")</script>';
-                $_SESSION['usuario'] = $user['eCorreo']; // Guarda el correo del usuario en la sesión
-                header('Location: index.php');
-                exit();
-              } else {
-                //Preparación de variable error en login
-                $errorLogin = true;
-              }
-              break;
-            } else {
-              $errorLogin = true;
-            }
+          try {
+          } catch (\PDOException $ex) {
+            throw $ex;
+          } catch (Exception $ex) {
+            $errorDoNotExists = $ex->getMessage();
+          } finally {
+            if (isset($snt))
+              unset($snt);
+            if (isset($con))
+              $con = null;
           }
-        } catch (\PDOException $ex) {
+          return [];
+        } catch (Exception $ex) {
           // Lanzar una excepción con un mensaje informativo
-          throw new Exception("Error procesando el login: " . $ex->getMessage());
+          throw new Exception("Error procesando el login: ");
         }
       }
     }
