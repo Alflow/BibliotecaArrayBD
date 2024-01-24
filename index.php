@@ -4,10 +4,7 @@ session_start();
 error_reporting(E_ALL);
 
 
-//definimos las constantes de la ubicación de los archivos
-define('LIBROS_FILE', __DIR__ . '/fuente/Repositorio/libros.txt');
-define('LIBROS_PRESTADOS_FILE', __DIR__ . '/fuente/Repositorio/librosPrestados.txt');
-define('SOCIOS_FILE', __DIR__ . '/fuente/Repositorio/socios.txt');
+
 
 
 require_once __DIR__ . '/fuente/Controlador/DefaultController.inc'; /*controladores */

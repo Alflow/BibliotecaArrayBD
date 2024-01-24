@@ -16,6 +16,11 @@
     if (isset($errorIncorrectEmail)) {
         echo '<span> El corro electrónico introducido no es válido</span><br>';
     }
+    if (isset($errorNoExiste)) {
+        echo '<span> No existe este usuario</span><br>';
+    }
+
+
     ?>
     <input type="submit" name="ok" value="ENTRAR">
 </form>

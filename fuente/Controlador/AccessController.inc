@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../Repositorio/GestionBdRepositorio.php';
+require_once __DIR__ . '/../../fuente/Repositorio/GestionBdRepositorio.php';
 require_once __DIR__ . '/../../app/utilidades/sanea.inc';
 
 class AccessController
@@ -15,6 +15,7 @@ class AccessController
       }
 
 
+
       if (empty($inputs['userName']) || empty($inputs['password'])) {
         $errorEmptyData = true;
       } else {
@@ -22,43 +23,43 @@ class AccessController
           $errorIncorrectEmail = true;
         }
       }
-
       if (!isset($errorEmptyData) && !isset($errorIncorrectEmail)) {
         try {
           require_once __DIR__ . '/../Modelo/AppException.inc';
-          require_once __DIR__ . '/../../core/ConexionBd.inc';
-          require_once __DIR__ . '/../../fuente/Repositorio/GestionBdRepositorio.php';
 
-          try {
-          } catch (\PDOException $ex) {
-            throw $ex;
-          } catch (Exception $ex) {
-            $errorDoNotExists = $ex->getMessage();
-          } finally {
-            if (isset($snt))
-              unset($snt);
-            if (isset($con))
-              $con = null;
+          $listadoUsuarios = (new GestionBdRepositorio())->getSocioByECorreo($inputs['userName']);
+
+          if (password_verify($inputs['password'], $listadoUsuarios['pwd'])) {
+            // PASS COINCIDE
+            echo '<script> alert("BIENVENIDO!")</script>';
+            $_SESSION['usuario'] = $listadoUsuarios['eCorreo']; // Guarda el correo del usuario en la sesión
+            header('Location: index.php');
+            exit();
           }
-          return [];
+          //Preparación de variable error en login
+          $errorLogin = true;
+        } catch (PDOException $ex) {
+          $errorNoExiste = $ex->getMessage();
         } catch (Exception $ex) {
-          // Lanzar una excepción con un mensaje informativo
-          throw new Exception("Error procesando el login: ");
+          if ($ex->getCode() === 100) {
+            $errorNoExiste = $ex->getMessage();
+          }
         }
       }
     }
+
     include __DIR__ . '/../../app/plantillas/login.inc';
   }
 
 
-
-  public function logOut() //funcion para cerrar sesión. 
+  //funcion para cerrar sesión. 
+  public function logOut()
   {
+    //Método para desLogar al usuario
     echo '<script> alert("Se cerrará su sesión") </script>';
+
     // Limpiamos el arreglo de sesión
     $_SESSION = array();
-    //retrasa dos segundos el cierre de sesión.
-    sleep(2);
     // Destruimos la sesión y redirigimos 
     session_destroy();
     header('Location: index.php');
