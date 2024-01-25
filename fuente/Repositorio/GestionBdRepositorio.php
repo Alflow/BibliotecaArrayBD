@@ -221,6 +221,29 @@ class GestionBdRepositorio
             throw $ex;
         }
     }
+
+    // Función que devuelve un array con los libros prestados que tiene el usuario.
+    public function getLibrosPrestadosPorSocio(string $eCorreo): array
+    {
+        $sql = 'SELECT libro.codigo, eCorreo, titulo, autor FROM libroPrestado LEFT JOIN libro on (libro.codigo = libroPrestado.codigo) WHERE eCorreo = :eCorreo';
+        require_once __DIR__ . '/../../core/ConexionBd.inc';
+
+        try {
+            $con = (new ConexionBd())->getConexion();
+            $snt = $con->prepare($sql);
+            $snt->bindParam(':eCorreo', $eCorreo);
+            $snt->execute();
+            $librosPrestados = [];
+            $librosPrestados = $snt->fetchAll(PDO::FETCH_ASSOC);
+            if ($librosPrestados === false) {
+                throw new Exception('No hay libros prestados de este usuario', 100);
+            } else {
+                return $librosPrestados;
+            }
+        } catch (\PDOException $ex) {
+            throw $ex;
+        }
+    }
 }
 
 // Tenemos que conseguir devolver leyendo de la base de datos.

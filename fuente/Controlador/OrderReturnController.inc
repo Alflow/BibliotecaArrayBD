@@ -13,6 +13,7 @@ class OrderReturnController
         $gestorBD = new GestionBdRepositorio();
 
         if (isset($_SESSION['usuario'])) {
+            $correoUsuario = $_SESSION['usuario'];
 
             if (isset($_POST['okReturn'])) {
 
@@ -24,31 +25,18 @@ class OrderReturnController
                 // Rompemos la referencia después del bucle
                 unset($bookForReturn);
 
-
-
                 //extraemos el array de libros que están prestados
-                $borrowedBooks =  $gestorBD->getLibrosPrestados();
-                //extraemos el array de librería
-                $library = $gestorBD->getLibros();
+                $borrowedBooks =  $gestorBD->getLibrosPrestadosPorSocio($correoUsuario);
 
                 $gestorBD->devolverLibrosPrestados($booksForReturn);
-
                 header('location: index.php?ctl=returnUserBooks');
             } else {
 
                 //Extraemos el array de Libros prestados y el array de libros general para tener los titulos, autores etc para la vista
-                $borrowedBooks =  $gestorBD->getLibrosPrestados();
-                $library = $gestorBD->getLibros();
+                $borrowedBooks =  $gestorBD->getLibrosPrestadosPorSocio($correoUsuario);
 
-                //Preparamos un array para mostrar al usuario sus libros prestados
-                $userBooks = [];
 
-                foreach ($borrowedBooks as $borrowedBooksDetails) {
-                    if ($borrowedBooksDetails[1] == $_SESSION['usuario']) {
-                        $userBooks[] = $borrowedBooksDetails[0];
-                    }
-                }
-                if (empty($userBooks)) {
+                if (empty($borrowedBooks)) {
                     echo '<script> alert("No tienes libros prestados!") </script>';
                 }
             }

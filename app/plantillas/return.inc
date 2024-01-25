@@ -2,7 +2,7 @@
 
 <h1>Devolución de Libros</h1>
 <?php
-if (empty($userBooks)) {
+if (empty($borrowedBooks)) {
     echo '<h2> No tienes ningún libro prestado! </h2>';
 } else {
     echo '<h2>Libros prestados de ' . $_SESSION['usuario'] . '</h2>';
@@ -17,33 +17,29 @@ if (empty($userBooks)) {
             <th>Autor</th>
             <th>Seleccionar</th>
         </tr>
+        <?php
+        // var_dump($borrowedBooks);
+
+        ?>
         <?php if (isset($_POST['ok'])) : ?>
             <?php foreach ($borrowedBooks as $code) : ?>
-                <?php if ($code[1] == $_SESSION['usuario']) : ?>
-                    <?php foreach ($library as $book => $bookData) : ?>
-                        <?php if ($code[0] === $book) : ?>
-                            <tr>
-                                <td><?= htmlspecialchars($bookData['titulo']) ?></td>
-                                <td><?= htmlspecialchars($bookData['autor']) ?></td>
-                                <td><input type="checkbox" name="booksForReturn[]" value="<?= htmlspecialchars($code[0]) ?>"></td>
-                            </tr>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <tr>
+                    <td><?= htmlspecialchars($code['titulo']) ?></td>
+                    <td><?= htmlspecialchars($code['autor']) ?></td>
+                    <td>
+                        <input type="checkbox" name="booksForReturn[]" value="<?= htmlspecialchars($code['codigo']) ?>">
+                    </td>
+                </tr>
             <?php endforeach; ?>
         <?php else : ?>
             <?php foreach ($borrowedBooks as $code) : ?>
-                <?php if ($code[1] == $_SESSION['usuario']) : ?>
-                    <?php foreach ($library as $book => $bookData) : ?>
-                        <?php if ($code[0] === $book) : ?>
-                            <tr>
-                                <td><?= htmlspecialchars($bookData['titulo']) ?></td>
-                                <td><?= htmlspecialchars($bookData['autor']) ?></td>
-                                <td><input type="checkbox" name="booksForReturn[]" value="<?= htmlspecialchars($code[0]) ?>"></td>
-                            </tr>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <tr>
+                    <td><?= htmlspecialchars($code['titulo']) ?></td>
+                    <td><?= htmlspecialchars($code['autor']) ?></td>
+                    <td>
+                        <input type="checkbox" name="booksForReturn[]" value="<?= htmlspecialchars($code['codigo']) ?>">
+                    </td>
+                </tr>
             <?php endforeach; ?>
         <?php endif; ?>
     </table>
