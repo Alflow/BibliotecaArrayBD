@@ -14,7 +14,7 @@
         echo '<span> El usuario o contraseña son incorrectos</span><br>';
     }
     if (isset($errorIncorrectEmail)) {
-        echo '<span> El corro electrónico introducido no es válido</span><br>';
+        echo '<span> El correo electrónico introducido no es válido</span><br>';
     }
     if (isset($errorNoExiste)) {
         echo '<span> No existe este usuario</span><br>';
