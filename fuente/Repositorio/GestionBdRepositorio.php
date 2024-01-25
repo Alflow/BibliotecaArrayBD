@@ -1,84 +1,73 @@
 <?php
 
+use FTP\Connection;
+
 class GestionBdRepositorio
 {
+    public static function obtenerConexion()
+    {
+        require_once __DIR__ . '/../../core/ConexionBd.inc';
+        return (new ConexionBd())->getConexion();
+    }
+
     public function getLibros(): array
-    { {
-            $sql = 'SELECT codigo, titulo, autor, genero, prestado
+    {
+        $sql = 'SELECT codigo, titulo, autor, genero, prestado
                     FROM libro ';
 
-            require_once __DIR__ . '/../../core/ConexionBd.inc';
-            try {
-                $con = (new ConexionBd())->getConexion();
-                $snt = $con->prepare($sql);
-                $snt->execute();
 
-                //almacenamos en templibrary los datos de la tabla para poder modificar su disposición a la original de ficheros
-                $tempLibrary = $snt->fetchAll(PDO::FETCH_ASSOC);
-                // var_dump('TEST TEMP LIBRARY');
-                // var_dump($tempLibrary);
+        try {
+            $con = GestionBdRepositorio::obtenerConexion();
+            $snt = $con->prepare($sql);
+            $snt->execute();
 
-                $finalLibrary = [];
-                foreach ($tempLibrary as $book => $details) {
-                    $finalLibrary[$details['codigo']] = ['titulo' => $details['titulo'], 'autor' => $details['autor'], 'genero' => $details['genero'], 'prestado' => $details['prestado']];
-                }
-                // var_dump('TEST FINAL LIBRARY');
-                // var_dump($finalLibrary);
+            //almacenamos en templibrary los datos de la tabla para poder modificar su disposición a la original de ficheros
+            $tempLibrary = $snt->fetchAll(PDO::FETCH_ASSOC);
 
-                return $finalLibrary;
-
-
-
-                // OTRA MANERA
-                // $library = [];
-                // while ($fila = $snt->fetch(pdo::FETCH_ASSOC)) {
-                //     $library[$fila['codigo']['titulo']] = $fila['titulo'];
-                //     $library[$fila['codigo']['autor']] = $fila['autor'];
-                //     $library[$fila['codigo']['genero']] = $fila['genero'];
-                //     $library[$fila['codigo']['prestado']] = $fila['prestado'];
-                // }
-
-
-            } catch (\PDOException $ex) {
-                throw $ex;
-            } finally {
-                if (isset($snt))
-                    unset($snt);
-                if (isset($con))
-                    $con = null;
+            $finalLibrary = [];
+            foreach ($tempLibrary as $book => $details) {
+                $finalLibrary[$details['codigo']] = ['titulo' => $details['titulo'], 'autor' => $details['autor'], 'genero' => $details['genero'], 'prestado' => $details['prestado']];
             }
-            return [];
+
+            return $finalLibrary;
+        } catch (\PDOException $ex) {
+            throw $ex;
+        } finally {
+            if (isset($snt))
+                unset($snt);
+            if (isset($con))
+                $con = null;
         }
+        return [];
     }
 
 
     public function getSocios(): array
-    { {
-            $sql = 'SELECT eCorreo, pwd
+    {
+        $sql = 'SELECT eCorreo, pwd
                     FROM socio ';
 
-            require_once __DIR__ . '/../../core/ConexionBd.inc';
-            try {
-                $con = (new ConexionBd())->getConexion();
-                $snt = $con->prepare($sql);
-                $snt->execute();
-                $users = [];
+        require_once __DIR__ . '/../../core/ConexionBd.inc';
+        try {
+            $con = (new ConexionBd())->getConexion();
+            $snt = $con->prepare($sql);
+            $snt->execute();
+            $users = [];
 
-                // preparamos el array con la estructura original de socios
-                while ($fila = $snt->fetch(pdo::FETCH_ASSOC)) {
-                    $users[] = ['eCorreo' => $fila['eCorreo'], 'pwd' => $fila['pwd']];
-                }
-                return $users;
-            } catch (\PDOException $ex) {
-                throw $ex;
-            } finally {
-                if (isset($snt))
-                    unset($snt);
-                if (isset($con))
-                    $con = null;
+            // preparamos el array con la estructura original de socios
+            while ($fila = $snt->fetch(pdo::FETCH_ASSOC)) {
+                $users[] = ['eCorreo' => $fila['eCorreo'], 'pwd' => $fila['pwd']];
             }
-            return [];
+            return $users;
+        } catch (\PDOException $ex) {
+            throw $ex;
+        } finally {
+            if (isset($snt))
+                unset($snt);
+            if (isset($con))
+                $con = null;
         }
+        return [];
     }
 
     public function getLibrosPrestados(): array
@@ -118,7 +107,6 @@ class GestionBdRepositorio
 
         // preparo sentencia de modificación en LIBROS PRESTADOS (ELIMINACIÓN).
         $sql_2 = 'DELETE FROM libroPrestado WHERE codigo = :codigo';
-
 
         try {
             $con = (new ConexionBd())->getConexion();
