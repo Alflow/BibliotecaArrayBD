@@ -4,12 +4,6 @@ use FTP\Connection;
 
 class GestionBdRepositorio
 {
-    public static function obtenerConexion()
-    {
-        require_once __DIR__ . '/../../core/ConexionBd.inc';
-        return (new ConexionBd())->getConexion();
-    }
-
     public function getLibros(): array
     {
         $sql = 'SELECT codigo, titulo, autor, genero, prestado
@@ -17,7 +11,8 @@ class GestionBdRepositorio
 
 
         try {
-            $con = GestionBdRepositorio::obtenerConexion();
+            require_once __DIR__ . '/../../core/ConexionBd.inc';
+            $con = (new ConexionBd())->getConexion();
             $snt = $con->prepare($sql);
             $snt->execute();
 
