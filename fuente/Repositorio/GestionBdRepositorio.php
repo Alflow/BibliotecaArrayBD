@@ -1,7 +1,11 @@
 <?php
 
+namespace App\Respository;
+
 class GestionBdRepositorio
 {
+    use MiniBiblioteca\Core;
+
     public function getLibros(): array
     { {
             $sql = 'SELECT codigo, titulo, autor, genero, prestado
@@ -14,7 +18,7 @@ class GestionBdRepositorio
                 $snt->execute();
 
                 //almacenamos en templibrary los datos de la tabla para poder modificar su disposición a la original de ficheros
-                $tempLibrary = $snt->fetchAll(PDO::FETCH_ASSOC);
+                $tempLibrary = $snt->fetchAll(\PDO::FETCH_ASSOC);
                 // var_dump('TEST TEMP LIBRARY');
                 // var_dump($tempLibrary);
 
@@ -65,7 +69,7 @@ class GestionBdRepositorio
                 $users = [];
 
                 // preparamos el array con la estructura original de socios
-                while ($fila = $snt->fetch(pdo::FETCH_ASSOC)) {
+                while ($fila = $snt->fetch(\PDO::FETCH_ASSOC)) {
                     $users[] = ['eCorreo' => $fila['eCorreo'], 'pwd' => $fila['pwd']];
                 }
                 return $users;
@@ -112,12 +116,12 @@ class GestionBdRepositorio
     public function devolverLibrosPrestados(array $librosParaDevolver)
     {
         require_once __DIR__ . '/../../core/ConexionBd.inc';
-        
+
         // preparo sentencia de modificación en LIBROS.
-        $sql_1 = 'UPDATE libro SET prestado = 0 WHERE codigo = :codigo'; 
-        
+        $sql_1 = 'UPDATE libro SET prestado = 0 WHERE codigo = :codigo';
+
         // preparo sentencia de modificación en LIBROS PRESTADOS (ELIMINACIÓN).
-        $sql_2 = 'DELETE FROM libroPrestado WHERE codigo = :codigo'; 
+        $sql_2 = 'DELETE FROM libroPrestado WHERE codigo = :codigo';
 
         try {
             $con = (new ConexionBd())->getConexion();
@@ -152,14 +156,15 @@ class GestionBdRepositorio
         }
     }
 
-    public function pedirLibrosPrestados(array $librosParaPedir){
+    public function pedirLibrosPrestados(array $librosParaPedir)
+    {
         require_once __DIR__ . '/../../core/ConexionBd.inc';
-        
+
         // preparo sentencia de modificación en LIBROS.
-        $sql_1 = 'UPDATE libro SET prestado = 1 WHERE codigo = :codigo'; 
-        
+        $sql_1 = 'UPDATE libro SET prestado = 1 WHERE codigo = :codigo';
+
         // preparo sentencia de modificación en LIBROS PRESTADOS (ELIMINACIÓN).
-        $sql_2 = 'INSERT INTO libroPrestado (codigo, eCorreo) VALUES (:codigo ,:eCorreo)'; 
+        $sql_2 = 'INSERT INTO libroPrestado (codigo, eCorreo) VALUES (:codigo ,:eCorreo)';
 
         try {
             $con = (new ConexionBd())->getConexion();
@@ -174,15 +179,15 @@ class GestionBdRepositorio
             //Pido a snt que prepare la segunda Query
             $snt = $con->prepare($sql_2);
             foreach ($librosParaPedir as $codigo) {
-                $snt->bindParam(':codigo', $codigo, PDO::PARAM_STR );
+                $snt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
                 $correo = $_SESSION['usuario'];
-                $snt->bindParam(':eCorreo',$correo, PDO::PARAM_STR,);
+                $snt->bindParam(':eCorreo', $correo, PDO::PARAM_STR,);
                 $snt->execute();
             }
 
             $con->commit(); // Confirmar la transacción
 
-            
+
         } catch (\PDOException $ex) {
             if (isset($con)) {
                 $con->rollback(); // Revertir la transacción en caso de error
@@ -197,8 +202,6 @@ class GestionBdRepositorio
             }
         }
     }
-
-
 }
 
 // Tenemos que conseguir devolver leyendo de la base de datos.

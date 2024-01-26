@@ -1,5 +1,7 @@
 <?php
 
+namespace MiniBiblioteca\App\Respository;
+
 require_once __DIR__ . '/../Repositorio/GestionBdRepositorio.php';
 require_once __DIR__ . '/../../app/utilidades/sanea.inc';
 

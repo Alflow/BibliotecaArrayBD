@@ -1,7 +1,7 @@
 <?php
 
 
-// ....
+namespace App\Respository;
 
 class FileToArrayToFile
 {

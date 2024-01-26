@@ -1,4 +1,5 @@
 <?php
+
 // Ejemplo de controlador para página home de la aplicación
 require_once __DIR__ . '/../Repositorio/GestionBdRepositorio.php';
 
