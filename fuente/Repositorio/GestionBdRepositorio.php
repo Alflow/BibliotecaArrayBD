@@ -218,7 +218,7 @@ class GestionBdRepositorio
             $snt->execute();
             $librosPrestados = [];
             $librosPrestados = $snt->fetchAll(PDO::FETCH_ASSOC);
-            if ($librosPrestados === false) {
+            if (empty($librosPrestados)) {
                 throw new Exception('No hay libros prestados de este usuario', 100);
             } else {
                 return $librosPrestados;
