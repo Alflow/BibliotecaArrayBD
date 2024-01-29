@@ -8,9 +8,10 @@ $tituloApi = str_replace(" ", "%20", $titulo);
 $urlBase = 'https://www.googleapis.com/books/v1/volumes?q=intitle:';
 $content = file_get_contents($urlBase . $tituloApi);
 $data = json_decode($content, true);
+// var_dump($data);
 try {
-    $img = $data['items'][9]['volumeInfo']['imageLinks']['thumbnail'];
-    $description = ($data['items'][9]['volumeInfo']['description']);
+    $img = ($data['items'][9]['volumeInfo']['imageLinks']['thumbnail']) ?? '';
+    $description = ($data['items'][9]['volumeInfo']['description']) ?? '';
 } catch (Exception $e) {
     echo $e;
 }
