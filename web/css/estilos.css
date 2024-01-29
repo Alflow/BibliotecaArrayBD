@@ -98,7 +98,7 @@ tr:nth-child(even) td {
 }
 
 .libroContainer {
-  border: solid 1px red;
+  /* border: solid 1px red; */
   display: flex;
   width: 100%;
   height: 80vh;
@@ -118,10 +118,10 @@ tr:nth-child(even) td {
 
 .datosLibro {
   padding: 1rem;
-  border: solid 1px pink;
+  /* border: solid 1px pink; */
   width: 70%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-size: 0.7rem;
+  font-size: 1.2rem;
 }
