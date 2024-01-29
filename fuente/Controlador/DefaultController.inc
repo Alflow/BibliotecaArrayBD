@@ -14,4 +14,15 @@ class DefaultController
     // incluimos a la vista del inicio
     include __DIR__ . '/../../app/plantillas/inicio.inc';
   }
+
+  public function showBookDetails() //Función que extrae el array de existencias y se lo lleva a la vista del index.php con el header
+  {
+    //Creamos el objeto GestionBDRepositorio.
+    $library = (new GestionBdRepositorio())->getLibros();
+
+
+
+    // incluimos a la vista del inicio
+    include __DIR__ . '/../../app/plantillas/bookDetails.inc';
+  }
 }

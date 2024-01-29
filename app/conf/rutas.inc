@@ -6,4 +6,5 @@ $mapeoRutas =
     'logOut' => ['controller' => 'AccessController', 'action' => 'logOut'],
     'returnUserBooks' => ['controller' => 'OrderReturnController', 'action' => 'returnUserBooks'],
     'askForBooks' => ['controller' => 'OrderReturnController', 'action' => 'askForBooks'],
+    'showBookDetails' => ['controller' => 'DefaultController', 'action' => 'showBookDetails'],
   ];

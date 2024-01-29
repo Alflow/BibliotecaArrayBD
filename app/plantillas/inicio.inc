@@ -13,7 +13,7 @@
     <tbody>
       <?php
       foreach ($library as $codigo => ['titulo' => $titulo, 'autor' => $autor, 'genero' => $genero, 'prestado' => $disponible]) {
-        echo ($disponible == 0 ? '<tr><td><a href="#">' . $titulo . '</a></td>' : '<td>' . $titulo . '</td>');
+        echo ($disponible == 0 ? '<tr><td><a href="index.php?ctl=showBookDetails&tituloDetalles=' . $titulo . '">' . $titulo . '</a></td>' : '<td>' . $titulo . '</td>');
         echo '<td>' . $autor . '</td><td>' . $genero . '</td><td>' . ($disponible == 1 ? 'prestado' : 'Disponible') . '</td></tr>';
       }
       ?>
