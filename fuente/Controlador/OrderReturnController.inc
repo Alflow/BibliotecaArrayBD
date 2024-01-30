@@ -50,7 +50,7 @@ class OrderReturnController
         $gestorBD = new GestionBdRepositorio();
 
         //extraemos el array de libros que están prestados
-        $borrowedBooks =  $gestorBD->getLibrosPrestados();
+        $borrowedBooks =  $gestorBD->getLibrosDisponibles();
         //extraemos el array de librería
         $library = $gestorBD->getLibros();
 

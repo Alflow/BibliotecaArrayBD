@@ -100,20 +100,21 @@ tr:nth-child(even) td {
 .libroContainer {
   /* border: solid 1px red; */
   display: flex;
+  justify-content: start;
   width: 100%;
   height: 80vh;
 }
 
 .portada {
   display: flex;
-  height: 100%;
+  height: 50%;
   width: 30%;
 }
 
 .portada img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .datosLibro {

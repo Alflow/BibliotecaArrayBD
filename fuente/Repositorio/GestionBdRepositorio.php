@@ -36,6 +36,41 @@ class GestionBdRepositorio
         return [];
     }
 
+    public function getLibrosDisponibles()
+    {
+        $sql = 'SELECT codigo, titulo, autor, genero, prestado
+                    FROM libro WHERE prestado=0 ';
+
+        try {
+            require_once __DIR__ . '/../../core/ConexionBd.inc';
+            $con = (new ConexionBd())->getConexion();
+            $snt = $con->prepare($sql);
+            $snt->execute();
+
+            //almacenamos en templibrary los datos de la tabla para poder modificar su disposición a la original de ficheros
+            $tempLibrary = $snt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Si no quedan libros disponibles. 
+            if (empty($tempLibrary)) {
+                echo '<script> alert("No nos quedan libros disponibles!")</script>';
+                header('Location: index.php');
+            }
+            $finalLibrary = [];
+            foreach ($tempLibrary as $book => $details) {
+                $finalLibrary[$details['codigo']] = ['titulo' => $details['titulo'], 'autor' => $details['autor'], 'genero' => $details['genero'], 'prestado' => $details['prestado']];
+            }
+
+            return $finalLibrary;
+        } catch (\PDOException $ex) {
+            throw $ex;
+        } finally {
+            if (isset($snt))
+                unset($snt);
+            if (isset($con))
+                $con = null;
+        }
+        return [];
+    }
 
     public function getSocios(): array
     {

@@ -58,8 +58,8 @@ class AccessController
     //Método para desLogar al usuario
     echo '<script> alert("Se cerrará su sesión") </script>';
 
-    // Limpiamos el arreglo de sesión
-    $_SESSION = array();
+    // Limpiamos el arreglo de sesión de usuario
+    unset($_SESSION['usuario']);
     // Destruimos la sesión y redirigimos 
     session_destroy();
     header('Location: index.php');
