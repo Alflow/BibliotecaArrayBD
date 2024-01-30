@@ -50,9 +50,8 @@ class OrderReturnController
         $gestorBD = new GestionBdRepositorio();
 
         //extraemos el array de libros que están prestados
-        $borrowedBooks =  $gestorBD->getLibrosDisponibles();
+        $library =  $gestorBD->getLibrosDisponibles();
         //extraemos el array de librería
-        $library = $gestorBD->getLibros();
 
         if (isset($_SESSION['usuario'])) {
             if (isset($_POST['okAsk'])) {
@@ -74,6 +73,7 @@ class OrderReturnController
                 }
             }
         }
+
         include __DIR__ . '/../../app/plantillas/askForBooks.inc';
     }
 }
